@@ -57,7 +57,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.mypackage.MyClass</mainClass>
+                            <mainClass>com.Ninja.app</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
