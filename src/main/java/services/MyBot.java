@@ -16,8 +16,11 @@ import java.util.List;
 
 public class MyBot {
 
+    private final String discordToken;
+    private final String valToken;
+
     public void botListen() {
-        DiscordClient client = DiscordClient.create("MTExMjg4MTUyMTEyNTI0OTExNA.GJTN_N.6PEaLNmcC94G04CHxdCQ_xGnS7xY7IQb9AEPN0");
+        DiscordClient client = DiscordClient.create(discordToken);
 
         Mono<Void> login = client.withGateway((GatewayDiscordClient gateway) -> {
                 gateway.on(ReadyEvent.class)
@@ -85,8 +88,12 @@ public class MyBot {
     }
 
     private List<Player> getPlayerList() throws IOException, InterruptedException {
-        ValorantLeaderboard board =  new ValorantLeaderboard();
+        ValorantLeaderboard board =  new ValorantLeaderboard(valToken);
         return board.getLeaderBoard();
     }
 
+    public MyBot(String discordToken, String valToken) {
+        this.discordToken = discordToken;
+        this.valToken = valToken;
+    }
 }

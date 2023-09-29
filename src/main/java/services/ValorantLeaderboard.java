@@ -16,18 +16,10 @@ import java.util.stream.Collectors;
 
 public class ValorantLeaderboard {
 
+    private final String valToken;
     final static private String UNRATED_ICON_SMALL = "https://media.valorant-api.com/competitivetiers/edb72a72-7e6d-6010-9591-7c053bbdbf48/0/smallicon.png";
 
     public List<Player> getLeaderBoard() throws IOException, InterruptedException {
-        // Create a Discord client.
-//        DiscordClient client = new DiscordClientBuilder("YOUR_BOT_TOKEN").build();
-
-        // Create a Valorant API client.
-//        ValorantAPI api = new ValorantAPI();
-//        ValorantClient api = new ValorantClient("RGAPI-01d9a928-f608-4be6-a388-83295e2f9cb9", Region.EU);
-//        Matchlist matches = api.getMatchlist("OBkRoE3Tn9dNRdLxoeBZJ9fPEYa9bdxX7cgW0paAhsYVu-VKHYyhBCQCwUDOSYjsCEJ1xanklJXcpg");
-//        System.out.println(matches);
-
         //TODO: Try make use of /valorant/v2/mmr/{affinity}/{name}/{tag} to filter out people who don't have ranks in the current act
         ValorantAPI valorantAPI = new ValorantAPI();
         List<Player> playerList = new ArrayList<>();
@@ -89,7 +81,7 @@ public class ValorantLeaderboard {
 
     private Map<String,String> getNameTags() throws IOException {
         Map<String,String> nameTags = new HashMap<>();
-        ValorantAPI api = new ValorantAPI("HDEV-f420a09d-56cd-4ab9-92d0-0acfa1cab104");
+        ValorantAPI api = new ValorantAPI(valToken);
 
         for(PlayerIDs playerID : PlayerIDs.values()) {
             JsonObject accountData = api.sendRestRequest("/v1/by-puuid/account/" + playerID.getPlayerUUID()).getAsJsonObject().getAsJsonObject("data");
@@ -101,6 +93,10 @@ public class ValorantLeaderboard {
         }
 
         return nameTags;
+    }
+
+    public ValorantLeaderboard(String valToken) {
+        this.valToken = valToken;
     }
 
 }
