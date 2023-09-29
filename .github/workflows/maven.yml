@@ -27,8 +27,16 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+    - name: Build and Deploy
+      env:
+        DISCORD_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        VAL_TOKEN: ${{ secrets.VALORANT_API }}
+      run: |
+        # Compile and package your Java code here
+        mvn clean package
+
+        # Run your Java application with the Discord token
+        java -jar target/Valorant-bot-1.0-SNAPSHOT.jar $DISCORD_TOKEN $VAL_TOKEN
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
