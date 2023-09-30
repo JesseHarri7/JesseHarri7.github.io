@@ -34,7 +34,7 @@ jobs:
         VAL_TOKEN: ${{ secrets.VALORANT_API }}
       run: |
         # Compile and package your Java code here
-        mvn clean package
+        mvn clean package install
 
         # Run your Java application with the Discord token
-        java -jar target/Valorant-bot-1.0-SNAPSHOT.jar $DISCORD_TOKEN $VAL_TOKEN
+        java -jar target/Scripts/Valorant-bot-1.0-SNAPSHOT-dep-included.jar $DISCORD_TOKEN $VAL_TOKEN
